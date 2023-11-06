@@ -21,10 +21,8 @@ class WeatherProvider extends ChangeNotifier {
       double windSpeed = data['current_weather']['windspeed'];
       int windDirection = data['current_weather']['winddirection'];
       String time = data['current_weather']['time'];
-      Image icon = isDay == 'Day'
-          ? Image.asset('lib/Icons/day/clear-day.png', width: 40, height: 40)
-          : Image.asset('lib/Icons/night/clear-nigth.png',
-              width: 40, height: 40);
+      Image icon;
+
       // ignore: avoid_print
       print(
           'FetchWeather: Hora $time, Temp $temperature, Estado tiempo $weatherCode, Es dia $isDay,  Viento $windSpeed, Dir viento $windDirection');
@@ -55,11 +53,8 @@ class WeatherProvider extends ChangeNotifier {
           break;
         case 3:
           weatherStatus = 'Rainy';
-          icon = isDay == 'Day'
-              ? Image.asset('lib/Icons/day/raining-day.png',
-                  width: 40, height: 40)
-              : Image.asset('lib/Icons/night/raining-nigth.png',
-                  width: 40, height: 40);
+          icon = Image.asset('lib/Icons/day/raining-day.png',
+              width: 40, height: 40);
           break;
         default:
           icon = isDay == 'Day'

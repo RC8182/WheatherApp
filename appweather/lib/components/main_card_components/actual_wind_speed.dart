@@ -34,12 +34,13 @@ class ActualWindSpeed extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.center,
                   child: Image.asset('lib/Icons/arrow.png',
-                      width: 200, height: 200),
+                      width: 170, height: 170),
                 ),
               ),
-              SizedBox(
+              Container(
+                alignment: Alignment.center,
                 child: Image.asset('lib/Icons/compassRose.png',
-                    color: Colors.blue, width: 250, height: 250),
+                    color: Colors.blue, width: 200, height: 200),
               ),
             ],
           ),
