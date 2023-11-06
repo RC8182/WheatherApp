@@ -1,0 +1,18 @@
+import 'package:flutter/material.dart';
+
+class AppTheme {
+  static ThemeData lightTheme = ThemeData(
+    primaryColor: Colors.blue, // Color primario de la aplicación
+    accentColor: Colors.orange, // Color de acento para resaltar elementos
+    backgroundColor: Colors.white, // Color de fondo predeterminado
+    scaffoldBackgroundColor: Colors.white, // Color de fondo del scaffold
+    appBarTheme: AppBarTheme(
+      color: Colors.blue, // Color de fondo de la barra de aplicación
+    ),
+    textTheme: TextTheme(
+      bodyText1: TextStyle(color: Colors.black), // Color de texto principal
+      bodyText2: TextStyle(color: Colors.grey), // Otro estilo de texto, si es necesario
+    ),
+    // Agrega más configuraciones según sea necesario
+  );
+}

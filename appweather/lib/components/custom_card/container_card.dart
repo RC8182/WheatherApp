@@ -12,7 +12,7 @@ class ContainerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Column(
       children: [
         Container(
           margin: const EdgeInsets.all(20),

@@ -1,3 +1,4 @@
+import 'package:appweather/components/forecast_card.dart';
 import 'package:appweather/components/main_card.dart';
 import 'package:appweather/provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,12 @@ class _AppWeatherState extends State<AppWeather> {
           appBar: AppBar(
             title: const Text('Weather in El Médano'),
           ),
-          body: const MainCard(),
+          body: ListView(
+            children: const [
+              MainCard(),
+              ForecastCard(),
+            ],
+          ),
         ));
   }
 }
