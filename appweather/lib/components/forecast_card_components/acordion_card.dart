@@ -1,41 +1,28 @@
+import 'package:appweather/functions/functions.dart';
 import 'package:flutter/material.dart';
 
-class AcordionCard extends StatefulWidget {
+class AcordionCard extends StatelessWidget {
+  final List forecastDay;
   const AcordionCard({
     super.key,
+    required this.forecastDay,
   });
 
   @override
-  State<AcordionCard> createState() => _AcordionCardState();
-}
-
-class _AcordionCardState extends State<AcordionCard> {
-  @override
   Widget build(BuildContext context) {
     Image icon = Image.asset('lib/Icons/arrow.png', width: 25, height: 25);
-    List tableList = [
-      Tables(
-        time: '00:00',
-        wind: 20,
-        gust: 22,
-        direction: 23,
-        icon: icon,
-      ),
-      Tables(
-        time: '00:01',
-        wind: 22,
-        gust: 24,
-        direction: 56,
-        icon: icon,
-      ),
-      Tables(
-        time: '00:02',
-        wind: 22,
-        gust: 24,
-        direction: 186,
-        icon: icon,
-      ),
-    ];
+    List tableList = [];
+    for (var i in forecastDay) {
+      tableList.add(
+        Tables(
+          time: getHour(i['time']),
+          wind: i['windSpeed'],
+          gust: i['windGust'],
+          direction: i['windDirection'],
+          icon: icon,
+        ),
+      );
+    }
 
     return Column(
       children: <Widget>[

@@ -6,6 +6,11 @@ import 'dart:convert';
 class WeatherProvider extends ChangeNotifier {
   var _currentWeatherModel = CurrentWeatherModel.empty();
   CurrentWeatherModel get currentWeatherModel => _currentWeatherModel;
+  var _forecastList = [];
+  List get forecastList => _forecastList;
+  var _forecastDays = [];
+  List get forecastDays => _forecastDays;
+
   String url =
       'https://api.open-meteo.com/v1/forecast?latitude=28.05&longitude=-16.54&hourly=temperature_2m,weathercode,windspeed_10m,windgusts_10m,winddirection_10m,uv_index&models=gfs_global&current_weather=true&windspeed_unit=kn&timezone=Europe%2FLondon';
 
@@ -16,17 +21,61 @@ class WeatherProvider extends ChangeNotifier {
       Map<String, dynamic> data = json.decode(response.body);
       String isDay = data['current_weather']['is_day'] == 1 ? 'Day' : 'Night';
       int weatherCode = data['current_weather']['weathercode'];
-      double temperature = data['current_weather']['temperature'];
+      double currentTemperature = data['current_weather']['temperature'];
       String weatherStatus = 'Day';
-      double windSpeed = data['current_weather']['windspeed'];
-      int windDirection = data['current_weather']['winddirection'];
-      String time = data['current_weather']['time'];
+      double currentWindSpeed = data['current_weather']['windspeed'];
+      int currentWindDirection = data['current_weather']['winddirection'];
+      String currentTime = data['current_weather']['time'];
       Image icon;
 
-      // ignore: avoid_print
-      print(
-          'FetchWeather: Hora $time, Temp $temperature, Estado tiempo $weatherCode, Es dia $isDay,  Viento $windSpeed, Dir viento $windDirection');
+      // Forecast section //
 
+      List times = data['hourly']['time'];
+      List temperatures = data['hourly']['temperature_2m'];
+      List weatherCodes = data['hourly']['weathercode'];
+      List windSpeeds = data['hourly']['windspeed_10m'];
+      List windGusts = data['hourly']['windgusts_10m'];
+      List windDirections = data['hourly']['winddirection_10m'];
+      List uvIndices = data['hourly']['uv_index'];
+
+      for (int i = 0; i < times.length; i++) {
+        Map<String, dynamic> hourInfo = {
+          'time': times[i],
+          'temperature': temperatures[i],
+          'weatherCode': weatherCodes[i],
+          'windSpeed': windSpeeds[i],
+          'windGust': windGusts[i],
+          'windDirection': windDirections[i],
+          'uvIndex': uvIndices[i],
+        };
+        forecastList.add(hourInfo);
+      }
+      List todayForecast = [];
+      List day1 = [];
+      List day2 = [];
+      List day3 = [];
+      List day4 = [];
+      List day5 = [];
+      List day6 = [];
+
+      for (var i = 0; i < forecastList.length; i++) {
+        if (i < 24) {
+          todayForecast.add(forecastList[i]);
+        } else if (i < 48) {
+          day1.add(forecastList[i]);
+        } else if (i < 72) {
+          day2.add(forecastList[i]);
+        } else if (i < 96) {
+          day3.add(forecastList[i]);
+        } else if (i < 120) {
+          day4.add(forecastList[i]);
+        } else if (i < 144) {
+          day5.add(forecastList[i]);
+        } else {
+          day6.add(forecastList[i]);
+        }
+      }
+      _forecastDays = [todayForecast, day1, day2, day3, day4, day5, day6];
       switch (weatherCode) {
         case 0:
           weatherStatus = 'Clear';
@@ -65,15 +114,16 @@ class WeatherProvider extends ChangeNotifier {
       }
 
       CurrentWeatherModel weather = CurrentWeatherModel(
-        time: time,
+        time: currentTime,
         icon: icon,
-        temperature: temperature,
+        temperature: currentTemperature,
         dayState: isDay,
         weatherStatus: weatherStatus,
-        windSpeed: windSpeed,
-        windDirection: windDirection,
+        windSpeed: currentWindSpeed,
+        windDirection: currentWindDirection,
       );
-
+      _forecastDays = forecastDays;
+      _forecastList = forecastList;
       _currentWeatherModel = weather;
       notifyListeners();
     } else {
