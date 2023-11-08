@@ -9,16 +9,19 @@ class ForecastCard extends StatefulWidget {
   const ForecastCard({Key? key}) : super(key: key);
 
   @override
-  _ForecastCardState createState() => _ForecastCardState();
+  State<ForecastCard> createState() => _ForecastCardState();
 }
 
 class _ForecastCardState extends State<ForecastCard> {
-  int selectedDays = 2;
+  int selectedDays = 1;
 
   @override
   Widget build(BuildContext context) {
     var forecastDays = context.watch<WeatherProvider>().forecastDays;
     var selectedForecastDays = forecastDays.sublist(0, selectedDays);
+    Axis direction = MediaQuery.of(context).size.width < 500
+        ? Axis.vertical
+        : Axis.horizontal;
 
     return ContainerCard(
       child: Column(
@@ -36,80 +39,86 @@ class _ForecastCardState extends State<ForecastCard> {
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(
+              child: Flex(
+                direction: direction,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        selectedDays = 1;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: selectedDays == 1 ? Colors.blue : null,
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          selectedDays = 1;
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: selectedDays == 1 ? Colors.blue : null,
+                      ),
+                      child: const Text('1D'),
                     ),
-                    child: const Text('1D'),
-                  ),
-                  const SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        selectedDays = 2;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: selectedDays == 2 ? Colors.blue : null,
+                    const SizedBox(width: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          selectedDays = 2;
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: selectedDays == 2 ? Colors.blue : null,
+                      ),
+                      child: const Text('2D'),
                     ),
-                    child: const Text('2D'),
-                  ),
-                  const SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        selectedDays = 3;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: selectedDays == 3 ? Colors.blue : null,
+                    const SizedBox(width: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          selectedDays = 3;
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: selectedDays == 3 ? Colors.blue : null,
+                      ),
+                      child: const Text('3D'),
                     ),
-                    child: const Text('3D'),
-                  ),
-                  const SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        selectedDays = 4;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: selectedDays == 4 ? Colors.blue : null,
+                    const SizedBox(width: 10, height: 50),
+                  ]),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          selectedDays = 4;
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: selectedDays == 4 ? Colors.blue : null,
+                      ),
+                      child: const Text('4D'),
                     ),
-                    child: const Text('4D'),
-                  ),
-                  const SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        selectedDays = 5;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: selectedDays == 5 ? Colors.blue : null,
+                    const SizedBox(width: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          selectedDays = 5;
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: selectedDays == 5 ? Colors.blue : null,
+                      ),
+                      child: const Text('5D'),
                     ),
-                    child: const Text('5D'),
-                  ),
-                  const SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        selectedDays = 6;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: selectedDays == 6 ? Colors.blue : null,
+                    const SizedBox(width: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          selectedDays = 6;
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: selectedDays == 6 ? Colors.blue : null,
+                      ),
+                      child: const Text('6D'),
                     ),
-                    child: const Text('6D'),
-                  ),
+                    const SizedBox(width: 10, height: 50),
+                  ]),
                 ],
               ),
             ),
