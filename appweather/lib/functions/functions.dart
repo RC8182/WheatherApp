@@ -28,9 +28,8 @@ String getHour(String date) {
   return '$formattedHour:$formattedMinutes';
 }
 
-String formatDate(DateTime dateTime) {
-  String formattedDate = DateFormat.yMMMMd('en_US').format(dateTime);
-  String dayOfWeek = DateFormat('EEEE', 'en_US').format(dateTime);
-  formattedDate = formattedDate.replaceFirst(RegExp(r'\d{1,2}'), dayOfWeek);
+String formatDate(String dateString) {
+  DateTime date = DateTime.parse(dateString);
+  String formattedDate = DateFormat('MMMM, EEEE d, y').format(date);
   return formattedDate;
 }

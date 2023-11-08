@@ -21,7 +21,7 @@ class SingleForecastCard extends StatelessWidget {
           Container(
             alignment: Alignment.centerLeft,
             margin: const EdgeInsets.all(10),
-            child: Text(formatDate(DateTime.parse(forecastDays[0]['time'])),
+            child: Text(formatDate(forecastDays[1]['time']),
                 style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           ),
