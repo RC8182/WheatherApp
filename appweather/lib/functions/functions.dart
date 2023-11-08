@@ -33,3 +33,27 @@ String formatDate(String dateString) {
   String formattedDate = DateFormat('MMMM, EEEE d, y').format(date);
   return formattedDate;
 }
+
+double findLargest(List<double> numbers) {
+  double largest = numbers[0];
+
+  for (int i = 0; i < numbers.length; i++) {
+    if (numbers[i] > largest) {
+      largest = numbers[i];
+    }
+  }
+
+  return largest;
+}
+
+double findSmallest(List<double> numbers) {
+  double smallest = numbers[0];
+
+  for (int i = 0; i < numbers.length; i++) {
+    if (numbers[i] < smallest) {
+      smallest = numbers[i];
+    }
+  }
+
+  return smallest;
+}
