@@ -1,6 +1,6 @@
 import "package:appweather/components/forecast_card_components/acordion_card.dart";
+import "package:appweather/components/forecast_card_components/forecast_temp.dart";
 import "package:appweather/components/main_card_components/sun_status.dart";
-import "package:appweather/components/main_card_components/temperature.dart";
 import "package:appweather/functions/functions.dart";
 import "package:flutter/material.dart";
 
@@ -21,7 +21,7 @@ class SingleForecastCard extends StatelessWidget {
           Container(
             alignment: Alignment.centerLeft,
             margin: const EdgeInsets.all(10),
-            child: Text(formatDate(forecastDays[1]['time']),
+            child: Text(formatDate(forecastDays[0]['time']),
                 style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           ),
@@ -40,7 +40,9 @@ class SingleForecastCard extends StatelessWidget {
           Container(
             alignment: Alignment.centerLeft,
             margin: const EdgeInsets.all(10),
-            child: const Temperature(),
+            child: ForecastTemp(
+              forecastDay: forecastDays,
+            ),
           ),
         ],
       ),
