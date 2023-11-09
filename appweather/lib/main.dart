@@ -1,5 +1,6 @@
 import 'package:appweather/components/forecast_card.dart';
 import 'package:appweather/components/main_card.dart';
+import 'package:appweather/components/tide_level_card.dart';
 import 'package:appweather/provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +39,7 @@ class _AppWeatherState extends State<AppWeather> {
             children: const [
               MainCard(),
               ForecastCard(),
+              TideLevelCard(),
             ],
           ),
         ));

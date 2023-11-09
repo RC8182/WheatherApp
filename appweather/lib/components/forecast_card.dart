@@ -29,8 +29,12 @@ class _ForecastCardState extends State<ForecastCard> {
           Container(
             alignment: Alignment.centerLeft,
             margin: const EdgeInsets.all(10),
-            child: const Text("Forecast:"),
+            child: const Text(
+              "Forecast",
+              style: TextStyle(fontSize: 20),
+            ),
           ),
+          const H_Divider(),
           Container(
             margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(
@@ -123,7 +127,6 @@ class _ForecastCardState extends State<ForecastCard> {
               ),
             ),
           ),
-          const H_Divider(),
           const SizedBox(height: 20),
           for (var i = 0; i < selectedForecastDays.length; i++)
             Column(children: [
