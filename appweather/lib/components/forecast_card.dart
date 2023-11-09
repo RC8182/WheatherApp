@@ -125,19 +125,11 @@ class _ForecastCardState extends State<ForecastCard> {
           ),
           const H_Divider(),
           const SizedBox(height: 20),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: selectedForecastDays.length,
-            itemBuilder: (BuildContext context, int index) {
-              var forecastDay = selectedForecastDays[index];
-              return Column(
-                children: [
-                  SingleForecastCard(forecastDays: forecastDay),
-                  const SizedBox(height: 20),
-                ],
-              );
-            },
-          ),
+          for (var i = 0; i < selectedForecastDays.length; i++)
+            Column(children: [
+              SingleForecastCard(forecastDays: selectedForecastDays[i]),
+              const SizedBox(height: 20),
+            ]),
           const H_Divider(),
         ],
       ),
