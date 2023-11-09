@@ -8,7 +8,15 @@ class TideLevelCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var tideStatus = 'Tide Status';
+    String tideStatus = 'Tide Status';
+    String lowTide1 = '12:00';
+    String lowTide2 = '12:00';
+    String highTide1 = '12:00';
+    String highTide2 = '12:00';
+
+    Axis direction = MediaQuery.of(context).size.width < 500
+        ? Axis.vertical
+        : Axis.horizontal;
     return ContainerCard(
       child: Column(
         children: [
@@ -30,24 +38,25 @@ class TideLevelCard extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               IntrinsicHeight(
-                child: Row(
+                child: Flex(
+                  direction: direction,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset('lib/Icons/bajamar.png', width: 50, height: 50),
-                    const Column(
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Low Tide 1:'),
-                        Text('Low Tide 2:'),
+                        Text('Low Tide 1: $lowTide1'),
+                        Text('Low Tide 2: $lowTide2'),
                       ],
                     ), // Cierre del corchete faltante aquí
                     const V_Divider(),
                     Image.asset('lib/Icons/pleamar.png', width: 50, height: 50),
-                    const Column(
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('High Tide 1:'),
-                        Text('High Tide 2:'),
+                        Text('High Tide 1: $highTide1'),
+                        Text('High Tide 2: $highTide2'),
                       ],
                     ),
                   ],
