@@ -18,6 +18,13 @@ class _TideLevelChartState extends State<TideLevelChart> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Map<String, dynamic>> data = [
+      {"hora": "04:32", "altura": "0.763", "tipo": "bajamar"},
+      {"hora": "10:42", "altura": "1.836", "tipo": "pleamar"},
+      {"hora": "16:58", "altura": "0.582", "tipo": "bajamar"},
+      {"hora": "23:05", "altura": "1.790", "tipo": "pleamar"}
+    ];
+
     return Stack(
       children: <Widget>[
         AspectRatio(
@@ -30,25 +37,7 @@ class _TideLevelChartState extends State<TideLevelChart> {
               bottom: 12,
             ),
             child: LineChart(
-              showAvg ? avgData() : mainData(),
-            ),
-          ),
-        ),
-        SizedBox(
-          width: 60,
-          height: 34,
-          child: TextButton(
-            onPressed: () {
-              setState(() {
-                showAvg = !showAvg;
-              });
-            },
-            child: Text(
-              'avg',
-              style: TextStyle(
-                fontSize: 12,
-                color: showAvg ? Colors.white.withOpacity(0.5) : Colors.white,
-              ),
+              mainData(),
             ),
           ),
         ),
@@ -63,14 +52,20 @@ class _TideLevelChartState extends State<TideLevelChart> {
     );
     Widget text;
     switch (value.toInt()) {
-      case 2:
-        text = const Text('MAR', style: style);
+      case 0:
+        text = const Text('0', style: style);
         break;
-      case 5:
-        text = const Text('JUN', style: style);
+      case 6:
+        text = const Text('6', style: style);
         break;
-      case 8:
-        text = const Text('SEP', style: style);
+      case 12:
+        text = const Text('12', style: style);
+        break;
+      case 18:
+        text = const Text('18', style: style);
+        break;
+      case 23:
+        text = const Text('23', style: style);
         break;
       default:
         text = const Text('', style: style);
@@ -91,13 +86,16 @@ class _TideLevelChartState extends State<TideLevelChart> {
     String text;
     switch (value.toInt()) {
       case 1:
-        text = '10K';
+        text = '1 -';
+        break;
+      case 2:
+        text = '2 -';
         break;
       case 3:
-        text = '30k';
+        text = '3 -';
         break;
-      case 5:
-        text = '50k';
+      case 4:
+        text = '4 -';
         break;
       default:
         return Container();
@@ -109,7 +107,7 @@ class _TideLevelChartState extends State<TideLevelChart> {
   LineChartData mainData() {
     return LineChartData(
       gridData: FlGridData(
-        show: true,
+        show: false,
         drawVerticalLine: true,
         horizontalInterval: 1,
         verticalInterval: 1,
@@ -152,23 +150,21 @@ class _TideLevelChartState extends State<TideLevelChart> {
         ),
       ),
       borderData: FlBorderData(
-        show: true,
+        show: false,
         border: Border.all(color: const Color(0xff37434d)),
       ),
       minX: 0,
-      maxX: 11,
+      maxX: 23,
       minY: 0,
-      maxY: 6,
+      maxY: 4,
       lineBarsData: [
         LineChartBarData(
           spots: const [
             FlSpot(0, 3),
-            FlSpot(2.6, 2),
-            FlSpot(4.9, 5),
-            FlSpot(6.8, 3.1),
-            FlSpot(8, 4),
-            FlSpot(9.5, 3),
-            FlSpot(11, 4),
+            FlSpot(6, 1.5),
+            FlSpot(12, 2.5),
+            FlSpot(18, 2),
+            FlSpot(23, 3),
           ],
           isCurved: true,
           gradient: LinearGradient(
@@ -185,103 +181,6 @@ class _TideLevelChartState extends State<TideLevelChart> {
               colors: gradientColors
                   .map((color) => color.withOpacity(0.3))
                   .toList(),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  LineChartData avgData() {
-    return LineChartData(
-      lineTouchData: const LineTouchData(enabled: false),
-      gridData: FlGridData(
-        show: true,
-        drawHorizontalLine: true,
-        verticalInterval: 1,
-        horizontalInterval: 1,
-        getDrawingVerticalLine: (value) {
-          return const FlLine(
-            color: Color(0xff37434d),
-            strokeWidth: 1,
-          );
-        },
-        getDrawingHorizontalLine: (value) {
-          return const FlLine(
-            color: Color(0xff37434d),
-            strokeWidth: 1,
-          );
-        },
-      ),
-      titlesData: FlTitlesData(
-        show: true,
-        bottomTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: true,
-            reservedSize: 30,
-            getTitlesWidget: bottomTitleWidgets,
-            interval: 1,
-          ),
-        ),
-        leftTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: true,
-            getTitlesWidget: leftTitleWidgets,
-            reservedSize: 42,
-            interval: 1,
-          ),
-        ),
-        topTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
-        rightTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
-      ),
-      borderData: FlBorderData(
-        show: true,
-        border: Border.all(color: const Color(0xff37434d)),
-      ),
-      minX: 0,
-      maxX: 11,
-      minY: 0,
-      maxY: 6,
-      lineBarsData: [
-        LineChartBarData(
-          spots: const [
-            FlSpot(0, 3.44),
-            FlSpot(2.6, 3.44),
-            FlSpot(4.9, 3.44),
-            FlSpot(6.8, 3.44),
-            FlSpot(8, 3.44),
-            FlSpot(9.5, 3.44),
-            FlSpot(11, 3.44),
-          ],
-          isCurved: true,
-          gradient: LinearGradient(
-            colors: [
-              ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                  .lerp(0.2)!,
-              ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                  .lerp(0.2)!,
-            ],
-          ),
-          barWidth: 5,
-          isStrokeCapRound: true,
-          dotData: const FlDotData(
-            show: false,
-          ),
-          belowBarData: BarAreaData(
-            show: true,
-            gradient: LinearGradient(
-              colors: [
-                ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                    .lerp(0.2)!
-                    .withOpacity(0.1),
-                ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                    .lerp(0.2)!
-                    .withOpacity(0.1),
-              ],
             ),
           ),
         ),

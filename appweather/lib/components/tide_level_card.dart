@@ -64,7 +64,7 @@ class TideLevelCard extends StatelessWidget {
               )
             ],
           ),
-          const TideLevelChart(),
+          TideLevelChart(),
         ],
       ),
     );
