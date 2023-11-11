@@ -11,7 +11,6 @@ class DayStatus extends StatelessWidget {
     Axis direction = MediaQuery.of(context).size.width < 500
         ? Axis.vertical
         : Axis.horizontal;
-    ;
     String dayStatus = weather.weatherStatus;
     Image dayIcon = weather.icon;
     return Container(

@@ -1,12 +1,21 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-// final List<Map<String, dynamic>> data = [
-//   {"hora": "04:32", "altura": "0.763", "tipo": "bajamar"},
-//   {"hora": "10:42", "altura": "1.836", "tipo": "pleamar"},
-//   {"hora": "16:58", "altura": "0.582", "tipo": "bajamar"},
-//   {"hora": "23:05", "altura": "1.790", "tipo": "pleamar"}
-// ];
+final List<Map<String, dynamic>> data = [
+  {"hora": "05:38", "altura": "0.559", "tipo": "bajamar"},
+  {"hora": "11:46", "altura": "1.979", "tipo": "pleamar"},
+  {"hora": "17:56", "altura": "0.433", "tipo": "bajamar"},
+  {"hora": "05:38", "altura": "0.559", "tipo": "bajamar"},
+];
+double hTide1 = double.parse(data[0]['hora']);
+double hTide2 = double.parse(data[1]['hora']);
+double hTide3 = double.parse(data[2]['hora']);
+double hTide4 = double.parse(data[3]['hora']);
+
+double aTide1 = double.parse(data[0]['altura']);
+double aTide2 = double.parse(data[1]['altura']);
+double aTide3 = double.parse(data[2]['altura']);
+double aTide4 = double.parse(data[3]['altura']);
 
 class TideLevelChart extends StatelessWidget {
   final List<Color> gradientColors = [
@@ -44,22 +53,24 @@ class TideLevelChart extends StatelessWidget {
       fontWeight: FontWeight.bold,
       fontSize: 16,
     );
+    String hour1 = data[0]['hora'];
+    String hour2 = data[1]['hora'];
+    String hour3 = data[2]['hora'];
+    String hour4 = data[3]['hora'];
+
     Widget text;
     switch (value.toInt()) {
       case 0:
-        text = const Text('0', style: style);
+        text = Text(hour1, style: style);
         break;
-      case 6:
-        text = const Text('6', style: style);
+      case 8:
+        text = Text(hour2, style: style);
         break;
-      case 12:
-        text = const Text('12', style: style);
-        break;
-      case 18:
-        text = const Text('18', style: style);
+      case 16:
+        text = Text(hour3, style: style);
         break;
       case 23:
-        text = const Text('23', style: style);
+        text = Text(hour4, style: style);
         break;
       default:
         text = const Text('', style: style);
@@ -87,9 +98,6 @@ class TideLevelChart extends StatelessWidget {
         break;
       case 3:
         text = '3 -';
-        break;
-      case 4:
-        text = '4 -';
         break;
       default:
         return Container();
@@ -150,15 +158,14 @@ class TideLevelChart extends StatelessWidget {
       minX: 0,
       maxX: 23,
       minY: 0,
-      maxY: 4,
+      maxY: 3,
       lineBarsData: [
         LineChartBarData(
-          spots: const [
-            FlSpot(0, 3),
-            FlSpot(6, 1.5),
-            FlSpot(12, 2.5),
-            FlSpot(18, 2),
-            FlSpot(23, 3),
+          spots: [
+            FlSpot(0, double.parse(data[0]['altura'])),
+            FlSpot(8, double.parse(data[1]['altura'])),
+            FlSpot(16, double.parse(data[2]['altura'])),
+            FlSpot(23, double.parse(data[3]['altura'])),
           ],
           isCurved: true,
           gradient: LinearGradient(

@@ -57,3 +57,14 @@ double findSmallest(List<double> numbers) {
 
   return smallest;
 }
+
+// double stringTimeToDouble(horaString) {
+//   List<String> partes = horaString.split(':');
+
+//   int horas = int.parse(partes[0]);
+//   int minutos = int.parse(partes[1]);
+
+//   double valorDouble = horas + (minutos / 60.0);
+
+//   return (valorDouble);
+// }
