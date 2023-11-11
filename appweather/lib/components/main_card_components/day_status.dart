@@ -8,11 +8,16 @@ class DayStatus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var weather = context.watch<WeatherProvider>().currentWeatherModel;
+    Axis direction = MediaQuery.of(context).size.width < 500
+        ? Axis.vertical
+        : Axis.horizontal;
+    ;
     String dayStatus = weather.weatherStatus;
     Image dayIcon = weather.icon;
     return Container(
       margin: const EdgeInsets.all(10),
-      child: Row(
+      child: Flex(
+        direction: direction,
         children: [
           dayIcon,
           const SizedBox(width: 10),

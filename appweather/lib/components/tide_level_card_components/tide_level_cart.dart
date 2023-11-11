@@ -1,30 +1,24 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class TideLevelChart extends StatefulWidget {
-  const TideLevelChart({super.key});
+// final List<Map<String, dynamic>> data = [
+//   {"hora": "04:32", "altura": "0.763", "tipo": "bajamar"},
+//   {"hora": "10:42", "altura": "1.836", "tipo": "pleamar"},
+//   {"hora": "16:58", "altura": "0.582", "tipo": "bajamar"},
+//   {"hora": "23:05", "altura": "1.790", "tipo": "pleamar"}
+// ];
 
-  @override
-  State<TideLevelChart> createState() => _TideLevelChartState();
-}
-
-class _TideLevelChartState extends State<TideLevelChart> {
+class TideLevelChart extends StatelessWidget {
   final List<Color> gradientColors = [
     const Color(0xff23b6e6),
-    const Color(0xff02d39a),
+    const Color(0xFF0210D3),
+    const Color(0xff23b6e6),
   ];
 
-  bool showAvg = false;
+  TideLevelChart({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> data = [
-      {"hora": "04:32", "altura": "0.763", "tipo": "bajamar"},
-      {"hora": "10:42", "altura": "1.836", "tipo": "pleamar"},
-      {"hora": "16:58", "altura": "0.582", "tipo": "bajamar"},
-      {"hora": "23:05", "altura": "1.790", "tipo": "pleamar"}
-    ];
-
     return Stack(
       children: <Widget>[
         AspectRatio(
