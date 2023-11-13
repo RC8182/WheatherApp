@@ -1,18 +1,55 @@
 import 'package:appweather/components/custom_card/container_card.dart';
 import 'package:appweather/components/main_card.dart';
 import 'package:appweather/components/tide_level_card_components/tide_level_cart.dart';
+import 'package:appweather/functions/functions.dart';
+import 'package:appweather/provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TideLevelCard extends StatelessWidget {
   const TideLevelCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var tidesList = context.watch<TidesProvider>().tidesList;
+
+    Map<String, Map<String, List<String>>> tidesByDate = {};
+
+    for (int i = 0; i < tidesList.length; i++) {
+      String fecha = tidesList[i]['fecha'];
+      tidesByDate[fecha] ??= {'hora': [], 'altura': [], 'tipo': []};
+      tidesByDate[fecha]!['hora']?.add(tidesList[i]['hora']);
+      tidesByDate[fecha]!['altura']?.add(tidesList[i]['altura']);
+      tidesByDate[fecha]!['tipo']?.add(tidesList[i]['tipo']);
+    }
+    String today = getYearMounthDay();
+
+    print(tidesByDate);
+    List<String> lowTides = [];
+    List<String> highTides = [];
+
+    if (tidesByDate.containsKey(today)) {
+      List<String> tipos = tidesByDate[today]!['tipo']!;
+      List<String> horas = tidesByDate[today]!['hora']!;
+
+      for (int i = 0; i < tipos.length; i++) {
+        switch (tipos[i]) {
+          case 'bajamar':
+            lowTides.add(horas[i]);
+            break;
+          case 'pleamar':
+            highTides.add(horas[i]);
+            break;
+          default:
+        }
+      }
+    }
+
     String tideStatus = 'Tide Status';
-    String lowTide1 = '12:00';
-    String lowTide2 = '12:00';
-    String highTide1 = '12:00';
-    String highTide2 = '12:00';
+    String lowTide1 = lowTides[0];
+    String lowTide2 = lowTides[1];
+    String highTide1 = highTides[0];
+    String highTide2 = highTides[1];
 
     Axis direction = MediaQuery.of(context).size.width < 500
         ? Axis.vertical
@@ -64,7 +101,7 @@ class TideLevelCard extends StatelessWidget {
               )
             ],
           ),
-          TideLevelChart(),
+          TideLevelChart(tidesByDate: tidesByDate),
         ],
       ),
     );

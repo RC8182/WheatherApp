@@ -8,6 +8,22 @@ String getCurrentFormattedTime() {
   return formattedTime;
 }
 
+String getYearMounth() {
+  var now = DateTime.now();
+  var formatter = DateFormat('yyyyMM');
+  String formattedTime = formatter.format(now);
+
+  return formattedTime;
+}
+
+String getYearMounthDay() {
+  var now = DateTime.now();
+  var formatter = DateFormat('yyyy-MM-d');
+  String formattedTime = formatter.format(now);
+
+  return formattedTime;
+}
+
 String getCurrentFormattedDate() {
   var now = DateTime.now();
 

@@ -5,8 +5,11 @@ import 'package:appweather/provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(ChangeNotifierProvider(
-    create: (context) => WeatherProvider(), child: const AppWeather()));
+void main() => runApp(MultiProvider(providers: [
+      ChangeNotifierProvider<WeatherProvider>(
+          create: (context) => WeatherProvider()),
+      ChangeNotifierProvider(create: (context) => TidesProvider()),
+    ], child: const AppWeather()));
 
 class AppWeather extends StatefulWidget {
   const AppWeather({super.key});
@@ -20,6 +23,7 @@ class _AppWeatherState extends State<AppWeather> {
   void initState() {
     super.initState();
     context.read<WeatherProvider>().fetchWeather();
+    context.read<TidesProvider>().fetchTides();
   }
 
   @override

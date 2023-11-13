@@ -1,30 +1,17 @@
+import 'package:appweather/functions/functions.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-final List<Map<String, dynamic>> data = [
-  {"hora": "05:38", "altura": "0.559", "tipo": "bajamar"},
-  {"hora": "11:46", "altura": "1.979", "tipo": "pleamar"},
-  {"hora": "17:56", "altura": "0.433", "tipo": "bajamar"},
-  {"hora": "05:38", "altura": "0.559", "tipo": "bajamar"},
-];
-double hTide1 = double.parse(data[0]['hora']);
-double hTide2 = double.parse(data[1]['hora']);
-double hTide3 = double.parse(data[2]['hora']);
-double hTide4 = double.parse(data[3]['hora']);
-
-double aTide1 = double.parse(data[0]['altura']);
-double aTide2 = double.parse(data[1]['altura']);
-double aTide3 = double.parse(data[2]['altura']);
-double aTide4 = double.parse(data[3]['altura']);
-
 class TideLevelChart extends StatelessWidget {
+  final Map<String, Map<String, List<String>>> tidesByDate;
+  final today = getYearMounthDay();
+
+  TideLevelChart({Key? key, required this.tidesByDate}) : super(key: key);
   final List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xFF0210D3),
     const Color(0xff23b6e6),
   ];
-
-  TideLevelChart({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +40,10 @@ class TideLevelChart extends StatelessWidget {
       fontWeight: FontWeight.bold,
       fontSize: 16,
     );
-    String hour1 = data[0]['hora'];
-    String hour2 = data[1]['hora'];
-    String hour3 = data[2]['hora'];
-    String hour4 = data[3]['hora'];
+    String hour1 = tidesByDate[today]!['hora']![0];
+    String hour2 = tidesByDate[today]!['hora']![1];
+    String hour3 = tidesByDate[today]!['hora']![2];
+    String hour4 = tidesByDate[today]!['hora']![3];
 
     Widget text;
     switch (value.toInt()) {
@@ -162,10 +149,10 @@ class TideLevelChart extends StatelessWidget {
       lineBarsData: [
         LineChartBarData(
           spots: [
-            FlSpot(0, double.parse(data[0]['altura'])),
-            FlSpot(8, double.parse(data[1]['altura'])),
-            FlSpot(16, double.parse(data[2]['altura'])),
-            FlSpot(23, double.parse(data[3]['altura'])),
+            FlSpot(0, double.parse(tidesByDate[today]!['altura']![0])),
+            FlSpot(8, double.parse(tidesByDate[today]!['altura']![1])),
+            FlSpot(16, double.parse(tidesByDate[today]!['altura']![2])),
+            FlSpot(23, double.parse(tidesByDate[today]!['altura']![3])),
           ],
           isCurved: true,
           gradient: LinearGradient(

@@ -17,6 +17,7 @@ class _CityState extends State<City> {
   Widget build(BuildContext context) {
     void onSubmit() {
       context.read<WeatherProvider>().fetchWeather();
+      context.read<TidesProvider>().fetchTides();
       setState(() => _isLoading = true);
       Future.delayed(
         const Duration(seconds: 2),

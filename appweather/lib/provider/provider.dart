@@ -1,3 +1,4 @@
+import 'package:appweather/functions/functions.dart';
 import 'package:appweather/models/current_weather_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -128,6 +129,32 @@ class WeatherProvider extends ChangeNotifier {
       notifyListeners();
     } else {
       throw Exception('Failed to load weather data');
+    }
+  }
+}
+
+class TidesProvider extends ChangeNotifier {
+  var _tidesList = [];
+  List get tidesList => _tidesList;
+
+  Future<void> fetchTides() async {
+    String currenmonth = getYearMounth();
+
+    String url =
+        'https://ideihm.covam.es/api-ihm/getmarea?request=gettide&id=64&format=json&month=$currenmonth';
+    final response = await http.get(Uri.parse(url));
+    // ignore: avoid_print
+    print(currenmonth);
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+      List predictionsTides = data['mareas']['datos']['marea'];
+
+      _tidesList = predictionsTides;
+      _tidesList = tidesList;
+      notifyListeners();
+    } else {
+      throw Exception('Failed to load tides data');
     }
   }
 }
