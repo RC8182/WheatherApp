@@ -11,9 +11,11 @@ class WeatherProvider extends ChangeNotifier {
   List get forecastList => _forecastList;
   var _forecastDays = [];
   List get forecastDays => _forecastDays;
+  var _forecastSunStatus = [];
+  List get forecastSunStatus => _forecastSunStatus;
 
   String url =
-      'https://api.open-meteo.com/v1/forecast?latitude=28.05&longitude=-16.54&hourly=temperature_2m,weathercode,windspeed_10m,windgusts_10m,winddirection_10m,uv_index&models=gfs_global&current_weather=true&windspeed_unit=kn&timezone=Europe%2FLondon';
+      'https://api.open-meteo.com/v1/forecast?latitude=28.05&longitude=-16.54&hourly=temperature_2m,weathercode,windspeed_10m,windgusts_10m,winddirection_10m,uv_index&daily=sunrise,sunset&models=gfs_global&current_weather=true&windspeed_unit=kn&timezone=Europe%2FLondon';
 
   Future<void> fetchWeather() async {
     final response = await http.get(Uri.parse(url));
@@ -38,6 +40,8 @@ class WeatherProvider extends ChangeNotifier {
       List windGusts = data['hourly']['windgusts_10m'];
       List windDirections = data['hourly']['winddirection_10m'];
       List uvIndices = data['hourly']['uv_index'];
+      List sunrise = data['daily']['sunrise'];
+      List sunset = data['daily']['sunset'];
 
       for (int i = 0; i < times.length; i++) {
         Map<String, dynamic> hourInfo = {
@@ -50,6 +54,14 @@ class WeatherProvider extends ChangeNotifier {
           'uvIndex': uvIndices[i],
         };
         forecastList.add(hourInfo);
+      }
+      List sunStatusList = [];
+      for (int i = 0; i < sunrise.length; i++) {
+        Map<String, dynamic> sunStatusInfo = {
+          'sunrise': sunrise[i],
+          'sunset': sunset[i]
+        };
+        sunStatusList.add(sunStatusInfo);
       }
       List todayForecast = [];
       List day1 = [];
@@ -76,9 +88,11 @@ class WeatherProvider extends ChangeNotifier {
           day6.add(forecastList[i]);
         }
       }
+
+      _forecastSunStatus = sunStatusList;
       _forecastDays = [todayForecast, day1, day2, day3, day4, day5, day6];
       switch (weatherCode) {
-        case 0:
+        case 0 || 1:
           weatherStatus = 'Clear';
           icon = isDay == 'Day'
               ? Image.asset('lib/Icons/day/clear-day.png',
@@ -86,14 +100,15 @@ class WeatherProvider extends ChangeNotifier {
               : Image.asset('lib/Icons/night/clear-nigth.png',
                   width: 40, height: 40);
           break;
-        case 1:
+        case 2 || 3:
           weatherStatus = 'Cloudy';
           icon = isDay == 'Day'
               ? Image.asset('lib/Icons/day/claudy-day.png',
                   width: 40, height: 40)
               : Image.asset('lib/Icons/night/claudy-nigth.png',
                   width: 40, height: 40);
-        case 2:
+          break;
+        case 4:
           weatherStatus = 'Light rain';
           icon = isDay == 'Day'
               ? Image.asset('lib/Icons/day/raining-day.png',
@@ -101,7 +116,7 @@ class WeatherProvider extends ChangeNotifier {
               : Image.asset('lib/Icons/night/raining-nigth.png',
                   width: 40, height: 40);
           break;
-        case 3:
+        case 5:
           weatherStatus = 'Rainy';
           icon = Image.asset('lib/Icons/day/raining-day.png',
               width: 40, height: 40);
@@ -112,6 +127,7 @@ class WeatherProvider extends ChangeNotifier {
                   width: 40, height: 40)
               : Image.asset('lib/Icons/night/clear-nigth.png',
                   width: 40, height: 40);
+          break;
       }
 
       CurrentWeatherModel weather = CurrentWeatherModel(
@@ -143,8 +159,6 @@ class TidesProvider extends ChangeNotifier {
     String url =
         'https://ideihm.covam.es/api-ihm/getmarea?request=gettide&id=64&format=json&month=$currenmonth';
     final response = await http.get(Uri.parse(url));
-    // ignore: avoid_print
-    print(currenmonth);
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);

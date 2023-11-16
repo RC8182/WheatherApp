@@ -28,7 +28,10 @@ class SingleForecastCard extends StatelessWidget {
           Container(
             alignment: Alignment.centerLeft,
             margin: const EdgeInsets.all(10),
-            child: const SunStatus(),
+            child: const SunStatus(
+              sunrise: '2023-11-16T13:30',
+              sunset: '2023-11-16T13:30',
+            ),
           ),
           Container(
             alignment: Alignment.centerLeft,

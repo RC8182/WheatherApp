@@ -5,7 +5,9 @@ import 'package:appweather/components/main_card_components/temperature.dart';
 import 'package:appweather/components/main_card_components/city.dart';
 import 'package:appweather/components/main_card_components/day_status.dart';
 import 'package:appweather/components/main_card_components/uv_index.dart';
+import 'package:appweather/provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MainCard extends StatelessWidget {
   const MainCard({
@@ -14,9 +16,10 @@ class MainCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ContainerCard(
+    List sunInfo = context.watch<WeatherProvider>().forecastSunStatus;
+    return ContainerCard(
       child: Column(children: [
-        IntrinsicHeight(
+        const IntrinsicHeight(
           child: Row(
             children: [
               City(),
@@ -25,14 +28,17 @@ class MainCard extends StatelessWidget {
             ],
           ),
         ),
-        H_Divider(),
-        SunStatus(),
-        H_Divider(),
-        Temperature(),
-        H_Divider(),
-        UvIndex(),
-        H_Divider(),
-        ActualWindSpeed(),
+        const H_Divider(),
+        SunStatus(
+          sunrise: sunInfo[0]['sunrise'],
+          sunset: sunInfo[0]['sunset'],
+        ),
+        const H_Divider(),
+        const Temperature(),
+        const H_Divider(),
+        const UvIndex(),
+        const H_Divider(),
+        const ActualWindSpeed(),
       ]),
     );
   }
