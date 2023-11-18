@@ -18,7 +18,9 @@ class _ForecastCardState extends State<ForecastCard> {
   @override
   Widget build(BuildContext context) {
     var forecastDays = context.watch<WeatherProvider>().forecastDays;
+    var sunStatusDays = context.watch<WeatherProvider>().forecastSunStatus;
     var selectedForecastDays = forecastDays.sublist(0, selectedDays);
+
     Axis direction = MediaQuery.of(context).size.width < 500
         ? Axis.vertical
         : Axis.horizontal;
@@ -130,7 +132,11 @@ class _ForecastCardState extends State<ForecastCard> {
           const SizedBox(height: 20),
           for (var i = 0; i < selectedForecastDays.length; i++)
             Column(children: [
-              SingleForecastCard(forecastDays: selectedForecastDays[i]),
+              SingleForecastCard(
+                forecastDays: selectedForecastDays[i],
+                sunrise: sunStatusDays[i]['sunrise'],
+                sunset: sunStatusDays[i]['sunset'],
+              ),
               const SizedBox(height: 20),
             ]),
           const H_Divider(),

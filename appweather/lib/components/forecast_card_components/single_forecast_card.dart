@@ -6,7 +6,13 @@ import "package:flutter/material.dart";
 
 class SingleForecastCard extends StatelessWidget {
   final List forecastDays;
-  const SingleForecastCard({Key? key, required this.forecastDays})
+  final String sunset;
+  final String sunrise;
+  const SingleForecastCard(
+      {Key? key,
+      required this.forecastDays,
+      required this.sunrise,
+      required this.sunset})
       : super(key: key);
 
   @override
@@ -28,9 +34,9 @@ class SingleForecastCard extends StatelessWidget {
           Container(
             alignment: Alignment.centerLeft,
             margin: const EdgeInsets.all(10),
-            child: const SunStatus(
-              sunrise: '2023-11-16T13:30',
-              sunset: '2023-11-16T13:30',
+            child: SunStatus(
+              sunrise: sunrise,
+              sunset: sunset,
             ),
           ),
           Container(
