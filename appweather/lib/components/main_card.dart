@@ -1,3 +1,4 @@
+import 'package:appweather/components/custom_accordion/custom_accordion.dart';
 import 'package:appweather/components/custom_card/container_card.dart';
 import 'package:appweather/components/main_card_components/actual_wind_speed.dart';
 import 'package:appweather/components/main_card_components/sun_status.dart';
@@ -19,12 +20,21 @@ class MainCard extends StatelessWidget {
     List sunInfo = context.watch<WeatherProvider>().forecastSunStatus;
     return ContainerCard(
       child: Column(children: [
+        const H_Divider(),
+        const CustomAccordion(spots: [
+          'El Medano',
+          'Los Cristianos',
+          'Guimar',
+          'Spot 4',
+          'Spot 5'
+        ]),
+        const H_Divider(),
         const IntrinsicHeight(
           child: Row(
             children: [
               City(),
               V_Divider(),
-              DayStatus(),
+              Expanded(child: DayStatus()),
             ],
           ),
         ),

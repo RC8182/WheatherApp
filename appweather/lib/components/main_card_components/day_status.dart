@@ -16,6 +16,7 @@ class DayStatus extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(10),
       child: Flex(
+        mainAxisAlignment: MainAxisAlignment.center,
         direction: direction,
         children: [
           dayIcon,

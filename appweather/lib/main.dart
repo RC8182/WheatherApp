@@ -37,7 +37,7 @@ class _AppWeatherState extends State<AppWeather> {
         home: Scaffold(
           backgroundColor: const Color(0xFFE4E0DD),
           appBar: AppBar(
-            title: const Text('Weather in El Médano'),
+            title: const Center(child: Text('Canary Wind')),
           ),
           body: ListView(
             children: const [
