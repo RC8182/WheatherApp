@@ -23,10 +23,9 @@ class MainCard extends StatelessWidget {
         const H_Divider(),
         const CustomAccordion(spots: [
           'El Medano',
-          'Los Cristianos',
+          'Pt Granadilla',
+          'Adeje',
           'Guimar',
-          'Spot 4',
-          'Spot 5'
         ]),
         const H_Divider(),
         const IntrinsicHeight(

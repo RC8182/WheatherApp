@@ -17,7 +17,6 @@ class TideLevelChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(tidesByDate);
     return Stack(
       children: <Widget>[
         AspectRatio(

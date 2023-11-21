@@ -14,10 +14,49 @@ class WeatherProvider extends ChangeNotifier {
   var _forecastSunStatus = [];
   List get forecastSunStatus => _forecastSunStatus;
 
-  String url =
-      'https://api.open-meteo.com/v1/forecast?latitude=28.05&longitude=-16.54&hourly=temperature_2m,weathercode,windspeed_10m,windgusts_10m,winddirection_10m,uv_index&daily=sunrise,sunset&models=gfs_global&current_weather=true&windspeed_unit=kn&timezone=Europe%2FLondon';
+  String location = 'El Medano';
+  String latitude = '';
+  String longitude = '';
+  void setLocation(String newLocation) {
+    location = newLocation;
+    notifyListeners();
+  }
+
+  String getLocation() {
+    return location;
+  }
 
   Future<void> fetchWeather() async {
+    switch (location) {
+      case 'El Medano':
+        latitude = '28.5';
+        longitude = '-16.54';
+        break;
+
+      case 'Pt Granadilla':
+        latitude = '28.07';
+        longitude = '-16.48';
+        break;
+
+      case 'Adeje':
+        latitude = '28.12';
+        longitude = '-16.73';
+        break;
+
+      case 'Guimar':
+        latitude = '28.31';
+        longitude = '-16.41';
+        break;
+
+      // Puedes tener más casos según sea necesario.
+
+      default:
+        print('Tap to sellect spot.');
+    }
+
+    String url =
+        'https://api.open-meteo.com/v1/forecast?latitude=$latitude&longitude=$longitude&hourly=temperature_2m,weathercode,windspeed_10m,windgusts_10m,winddirection_10m,uv_index&daily=sunrise,sunset&models=gfs_global&current_weather=true&windspeed_unit=kn&timezone=Europe%2FLondon';
+
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {

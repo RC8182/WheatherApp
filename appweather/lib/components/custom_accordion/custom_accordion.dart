@@ -1,11 +1,11 @@
-// ignore_for_file: use_key_in_widget_constructors
-
+import "package:appweather/provider/provider.dart";
 import "package:flutter/material.dart";
+import "package:provider/provider.dart";
 
 class CustomAccordion extends StatefulWidget {
   final List<String> spots;
 
-  const CustomAccordion({required this.spots});
+  const CustomAccordion({super.key, required this.spots});
 
   @override
   State<CustomAccordion> createState() => _CustomAccordionState();
@@ -30,6 +30,8 @@ class _CustomAccordionState extends State<CustomAccordion> {
                 setState(() {
                   _selectedSpot = spot;
                   controller.collapse();
+                  context.read<WeatherProvider>().setLocation(_selectedSpot);
+                  context.read<WeatherProvider>().fetchWeather();
                 });
               },
             );
