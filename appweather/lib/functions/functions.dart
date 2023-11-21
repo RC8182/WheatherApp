@@ -16,12 +16,30 @@ String getYearMounth() {
   return formattedTime;
 }
 
-String getYearMounthDay() {
+String getYesterday() {
+  DateTime today = DateTime.now();
+  DateTime yesterday = today.subtract(const Duration(days: 1));
+
+  String formatYesterday = DateFormat('yyyy-MM-dd').format(yesterday);
+
+  return formatYesterday;
+}
+
+String getToday() {
   var now = DateTime.now();
   var formatter = DateFormat('yyyy-MM-d');
   String formattedTime = formatter.format(now);
 
   return formattedTime;
+}
+
+String getTomorrow() {
+  DateTime today = DateTime.now();
+  DateTime tomorrow = today.add(const Duration(days: 1));
+
+  String formatTomorrow = DateFormat('yyyy-MM-dd').format(tomorrow);
+
+  return formatTomorrow;
 }
 
 String getCurrentFormattedDate() {

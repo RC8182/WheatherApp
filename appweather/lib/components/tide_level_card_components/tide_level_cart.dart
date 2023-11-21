@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 
 class TideLevelChart extends StatelessWidget {
   final Map<String, Map<String, List<String>>> tidesByDate;
-  final today = getYearMounthDay();
+  final today = getToday();
+  final tomorrow = getTomorrow();
+  final yesterday = getYesterday();
 
   TideLevelChart({Key? key, required this.tidesByDate}) : super(key: key);
   final List<Color> gradientColors = [
@@ -15,6 +17,7 @@ class TideLevelChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(tidesByDate);
     return Stack(
       children: <Widget>[
         AspectRatio(
@@ -40,24 +43,32 @@ class TideLevelChart extends StatelessWidget {
       fontWeight: FontWeight.bold,
       fontSize: 16,
     );
-    String hour1 = tidesByDate[today]!['hora']![0];
-    String hour2 = tidesByDate[today]!['hora']![1];
-    String hour3 = tidesByDate[today]!['hora']![2];
-    String hour4 = tidesByDate[today]!['hora']![3];
-
+    String tide1 = tidesByDate[today]!['hora']![0];
+    String tide2 = tidesByDate[today]!['hora']![1];
+    String tide3 = tidesByDate[today]!['hora']![2];
+    String tide4 = tidesByDate[today]!['hora']!.length == 4
+        ? tidesByDate[today]!['hora']![3]
+        : tidesByDate[tomorrow]!['hora']![0];
+    String tide5 = tidesByDate[today]!['hora']!.length == 4
+        ? tidesByDate[tomorrow]!['hora']![0]
+        : tidesByDate[tomorrow]!['hora']![1];
     Widget text;
+
     switch (value.toInt()) {
       case 0:
-        text = Text(hour1, style: style);
+        text = Text(tide1, style: style);
         break;
       case 8:
-        text = Text(hour2, style: style);
+        text = Text(tide2, style: style);
         break;
       case 16:
-        text = Text(hour3, style: style);
+        text = Text(tide3, style: style);
         break;
-      case 23:
-        text = Text(hour4, style: style);
+      case 24:
+        text = Text(tide4, style: style);
+        break;
+      case 32:
+        text = Text(tide5, style: style);
         break;
       default:
         text = const Text('', style: style);
@@ -83,9 +94,7 @@ class TideLevelChart extends StatelessWidget {
       case 2:
         text = '2 -';
         break;
-      case 3:
-        text = '3 -';
-        break;
+
       default:
         return Container();
     }
@@ -94,6 +103,16 @@ class TideLevelChart extends StatelessWidget {
   }
 
   LineChartData mainData() {
+    double height1 = double.parse(tidesByDate[today]!['altura']![0]);
+    double height2 = double.parse(tidesByDate[today]!['altura']![1]);
+    double height3 = double.parse(tidesByDate[today]!['altura']![2]);
+    double height4 = tidesByDate[today]!['altura']!.length == 4
+        ? double.parse(tidesByDate[today]!['altura']![3])
+        : double.parse(tidesByDate[tomorrow]!['altura']![0]);
+    double height5 = tidesByDate[today]!['altura']!.length == 4
+        ? double.parse(tidesByDate[tomorrow]!['altura']![0])
+        : double.parse(tidesByDate[tomorrow]!['altura']![1]);
+
     return LineChartData(
       gridData: FlGridData(
         show: false,
@@ -102,13 +121,11 @@ class TideLevelChart extends StatelessWidget {
         verticalInterval: 1,
         getDrawingHorizontalLine: (value) {
           return const FlLine(
-            // color: AppColors.mainGridLineColor,
             strokeWidth: 1,
           );
         },
         getDrawingVerticalLine: (value) {
           return const FlLine(
-            // color: AppColors.mainGridLineColor,
             strokeWidth: 1,
           );
         },
@@ -143,16 +160,17 @@ class TideLevelChart extends StatelessWidget {
         border: Border.all(color: const Color(0xff37434d)),
       ),
       minX: 0,
-      maxX: 23,
+      maxX: 32,
       minY: 0,
-      maxY: 3,
+      maxY: 2,
       lineBarsData: [
         LineChartBarData(
           spots: [
-            FlSpot(0, double.parse(tidesByDate[today]!['altura']![0])),
-            FlSpot(8, double.parse(tidesByDate[today]!['altura']![1])),
-            FlSpot(16, double.parse(tidesByDate[today]!['altura']![2])),
-            FlSpot(23, double.parse(tidesByDate[today]!['altura']![3])),
+            FlSpot(0, height1),
+            FlSpot(8, height2),
+            FlSpot(16, height3),
+            FlSpot(23, height4),
+            FlSpot(32, height5),
           ],
           isCurved: true,
           gradient: LinearGradient(

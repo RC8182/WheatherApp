@@ -22,34 +22,22 @@ class TideLevelCard extends StatelessWidget {
       tidesByDate[fecha]!['altura']?.add(tidesList[i]['altura']);
       tidesByDate[fecha]!['tipo']?.add(tidesList[i]['tipo']);
     }
-    String today = getYearMounthDay();
-
-    print(tidesByDate);
-    List<String> lowTides = [];
-    List<String> highTides = [];
-
-    if (tidesByDate.containsKey(today)) {
-      List<String> tipos = tidesByDate[today]!['tipo']!;
-      List<String> horas = tidesByDate[today]!['hora']!;
-
-      for (int i = 0; i < tipos.length; i++) {
-        switch (tipos[i]) {
-          case 'bajamar':
-            lowTides.add(horas[i]);
-            break;
-          case 'pleamar':
-            highTides.add(horas[i]);
-            break;
-          default:
-        }
-      }
-    }
+    String today = getToday();
+    String tomorrow = getTomorrow();
 
     String tideStatus = 'Tide Status';
-    String lowTide1 = lowTides[0];
-    String lowTide2 = lowTides[1];
-    String highTide1 = highTides[0];
-    String highTide2 = highTides[1];
+    String tideTime1 = tidesByDate[today]!['hora']![0];
+    String tideTipe1 = tidesByDate[today]!['tipo']![0];
+    String tideTime2 = tidesByDate[today]!['hora']![1];
+    String tideTipe2 = tidesByDate[today]!['tipo']![1];
+    String tideTime3 = tidesByDate[today]!['hora']![2];
+    String tideTipe3 = tidesByDate[today]!['tipo']![2];
+    String tideTime4 = tidesByDate[today]!['hora']!.length == 4
+        ? tidesByDate[today]!['hora']![3]
+        : tidesByDate[tomorrow]!['hora']![0];
+    String tideTipe4 = tidesByDate[today]!['tipo']!.length == 4
+        ? tidesByDate[today]!['tipo']![3]
+        : tidesByDate[tomorrow]!['tipo']![0];
 
     Axis direction = MediaQuery.of(context).size.width < 500
         ? Axis.vertical
@@ -80,22 +68,24 @@ class TideLevelCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset('lib/Icons/bajamar.png', width: 50, height: 50),
+
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Low Tide 1: $lowTide1'),
-                        Text('Low Tide 2: $lowTide2'),
+                        Text('Tide 1: $tideTime1, $tideTipe1'),
+                        Text('Tide 2: $tideTime2, $tideTipe2'),
                       ],
                     ), // Cierre del corchete faltante aquí
                     const V_Divider(),
-                    Image.asset('lib/Icons/pleamar.png', width: 50, height: 50),
+
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('High Tide 1: $highTide1'),
-                        Text('High Tide 2: $highTide2'),
+                        Text('Tide 3: $tideTime3, $tideTipe3'),
+                        Text('Tide 4: $tideTime4, $tideTipe4'),
                       ],
                     ),
+                    Image.asset('lib/Icons/pleamar.png', width: 50, height: 50),
                   ],
                 ),
               )
