@@ -21,8 +21,8 @@ class _CustomAccordionState extends State<CustomAccordion> {
       children: <Widget>[
         ExpansionTile(
           controller: controller,
-          title: Text(_selectedSpot.isEmpty ? widget.spots[0] : _selectedSpot),
-          subtitle: const Text('Tap to select the Spot'),
+          title: const Text('Tap to select the Spot'),
+          //subtitle: const Text('Tap to select the Spot'),
           children: widget.spots.map((spot) {
             return ListTile(
               title: Text(spot),

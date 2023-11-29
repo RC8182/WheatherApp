@@ -39,8 +39,8 @@ class MainCard extends StatelessWidget {
         ),
         const H_Divider(),
         SunStatus(
-          sunrise: sunInfo[0]['sunrise'],
-          sunset: sunInfo[0]['sunset'],
+          sunrise: sunInfo[0]?['sunrise'],
+          sunset: sunInfo[0]?['sunset'],
         ),
         const H_Divider(),
         const Temperature(),
